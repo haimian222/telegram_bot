@@ -76,6 +76,14 @@ func (manager *BotManager) SendMessageText(botID int64, chatID int64, text strin
 	return manager.botMap[botID].SendMessageText(chatID, text)
 }
 
+// SendMessagePhoto 发送消息图片
+func (manager *BotManager) SendMessagePhoto(botID int64, chatID int64, photoBytes []byte, phoneName string, text string) (messageID int, err error) {
+	if !manager.botExists(botID) {
+		return 0, errors.New("bot not exists")
+	}
+	return manager.botMap[botID].SendMessagePhoto(chatID, photoBytes, phoneName, text)
+}
+
 // GetBotUsername 获取机器人用户名
 func (manager *BotManager) GetBotUsername(botID int64) (username string, err error) {
 	if !manager.botExists(botID) {

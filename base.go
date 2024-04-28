@@ -81,3 +81,18 @@ func (bot *BotBase) SendMessageText(chatID int64, text string) (messageID int, e
 	}
 	return message.MessageID, nil
 }
+
+// SendMessagePhoto 发送消息图片
+func (bot *BotBase) SendMessagePhoto(chatID int64, photoBytes []byte, phoneName string, text string) (messageID int, err error) {
+	photo := tgbotapi.FileBytes{
+		Name:  phoneName,
+		Bytes: photoBytes,
+	}
+	msg := tgbotapi.NewPhoto(chatID, photo)
+	msg.Caption = text
+	message, err := bot.botApi.Send(msg)
+	if err != nil {
+		return 0, err
+	}
+	return message.MessageID, nil
+}
