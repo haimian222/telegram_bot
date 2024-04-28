@@ -75,3 +75,11 @@ func (manager *BotManager) SendMessageText(botID int64, chatID int64, text strin
 	}
 	return manager.botMap[botID].SendMessageText(chatID, text)
 }
+
+// GetBotUsername 获取机器人用户名
+func (manager *BotManager) GetBotUsername(botID int64) (username string, err error) {
+	if !manager.botExists(botID) {
+		return "", errors.New("bot not exists")
+	}
+	return manager.botMap[botID].GetBotUsername(), nil
+}
