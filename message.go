@@ -27,5 +27,26 @@ type FromInfo struct {
 
 // MessageContent 消息内容
 type MessageContent struct {
-	Text string // 文本消息
+	Text     string      // 文本消息
+	Photo    []PhotoSize // 图片消息
+	Document *Document   // 文件消息
+}
+
+// Document 文件消息
+type Document struct {
+	FileID       string     // 文件ID
+	FileUniqueID string     // 文件唯一ID
+	Thumbnail    *PhotoSize // 缩略图
+	FileName     string     // 文件名
+	MimeType     string     // MIME类型
+	FileSize     int        // 文件大小
+}
+
+// PhotoSize 图片消息
+type PhotoSize struct {
+	FileID       string // 文件ID
+	FileUniqueID string // 文件唯一ID
+	Width        int    // 宽度
+	Height       int    // 高度
+	FileSize     int    // 文件大小
 }

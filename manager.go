@@ -68,6 +68,23 @@ func (manager *BotManager) GetEventChan() chan *Event {
 	return manager.eventChan
 }
 
+// GetBotUsername 获取机器人用户名
+func (manager *BotManager) GetBotUsername(botID int64) (username string, err error) {
+	if !manager.botExists(botID) {
+		return "", errors.New("bot not exists")
+	}
+	return manager.botMap[botID].GetBotUsername(), nil
+}
+
+// GetFileURL 获取文件URL
+func (manager *BotManager) GetFileURL(botID int64, fileID string) (fileURL string, err error) {
+	if !manager.botExists(botID) {
+		return "", errors.New("bot not exists")
+	}
+	return manager.botMap[botID].GetFileURL(fileID)
+
+}
+
 // SendMessageText 发送消息文本
 func (manager *BotManager) SendMessageText(botID int64, chatID int64, text string) (messageID int, err error) {
 	if !manager.botExists(botID) {
@@ -77,17 +94,17 @@ func (manager *BotManager) SendMessageText(botID int64, chatID int64, text strin
 }
 
 // SendMessagePhoto 发送消息图片
-func (manager *BotManager) SendMessagePhoto(botID int64, chatID int64, photoBytes []byte, phoneName string, text string) (messageID int, err error) {
+func (manager *BotManager) SendMessagePhoto(botID int64, chatID int64, photo PhotoConfig) (messageID int, err error) {
 	if !manager.botExists(botID) {
 		return 0, errors.New("bot not exists")
 	}
-	return manager.botMap[botID].SendMessagePhoto(chatID, photoBytes, phoneName, text)
+	return manager.botMap[botID].SendMessagePhoto(chatID, &photo)
 }
 
-// GetBotUsername 获取机器人用户名
-func (manager *BotManager) GetBotUsername(botID int64) (username string, err error) {
+// SendMessageDocument 发送消息文件
+func (manager *BotManager) SendMessageDocument(botID int64, chatID int64, document DocumentConfig) (messageID int, err error) {
 	if !manager.botExists(botID) {
-		return "", errors.New("bot not exists")
+		return 0, errors.New("bot not exists")
 	}
-	return manager.botMap[botID].GetBotUsername(), nil
+	return manager.botMap[botID].SendMessageDocument(chatID, &document)
 }
